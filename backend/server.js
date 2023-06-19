@@ -5,8 +5,7 @@ const { token } = require("./tokenFile");
 const app = express();
 const port = 3000;
 
-let Fruit = require(`./model/Animals`);
-const tokenFile = require("./tokenFile");
+let Animal = require(`./model/Animals`);
 
 app.use(express.json());
 
