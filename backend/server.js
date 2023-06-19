@@ -1,8 +1,13 @@
 const express = require(`express`);
 const mongoose = require(`mongoose`);
+const { token } = require("./tokenFile");
+
 const app = express();
 const port = 3000;
+
 let Fruit = require(`./model/Animals`);
+const tokenFile = require("./tokenFile");
+
 app.use(express.json());
 
 app.use(function(req, res, next) {
@@ -12,6 +17,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-mongoose.connect(`/?retryWrites=true&w=majority`);
+mongoose.connect(token);
 
 app.listen(port, () => console.log(`Server running on: http://127.0.0.1:${port}`));
