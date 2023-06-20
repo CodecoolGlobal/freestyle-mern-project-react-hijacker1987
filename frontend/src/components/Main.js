@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import DogElements from './DogElements';
+import Favourite from './Favourite';
 
 const { API_key } = require("./tokenFile");
 
