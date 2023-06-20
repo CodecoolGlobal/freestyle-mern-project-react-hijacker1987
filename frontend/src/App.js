@@ -1,47 +1,50 @@
-import { React, useState } from 'react';
 import './App.css';
-import DogElements from './components/DogElements';
-const { API_key } = require("./tokenFile");
 
-function App() {
-  const [inputChange, setInputChange] = useState(``);
-  const [result, setResult] = useState(null);
+import { React } from 'react';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 
-  const handleSubmitButton = ( element ) => {
-    element.preventDefault();
-    fetchData(`https://api.api-ninjas.com/v1/dogs?name=${inputChange}`);
-  }
+import Layout from './components/Layout';
+import Main from './components/Main';
 
-  const fetchData = async ( api ) => {
-    try {
-      const response = await fetch(api, {
-        headers: {
-          'X-Api-Key': `${API_key}`,
-          'Content-Type': 'application/json'
-        },
-      });
-      const jsonData = await response.json();
-      setResult(jsonData);
-    } catch (error) {
-      console.log(`Error fetching Data:`, error);
-    }
-  };
 
-  console.log(result);
-
-  return (
-    <div className="App">
-      <form onSubmit = { handleSubmitButton }>
-        <input onChange={ e => setInputChange( e.target.value )} placeholder='Doggi name'></input>
-        <button type="submit">Submit</button>
-      </form>
+function Parent({string}) {
+    return (
       <div>
-        <DogElements
-        result = { result }
-        />
+        {string}
+        <Outlet/>
+        <p>Hey I am some text</p>
       </div>
-    </div>
-  );
+    )
 }
 
-export default App;
+function Child({string}) {
+  return (
+    <div>
+      {string}
+      <Outlet/>
+    </div>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+          <Route path='/' element={<Layout/>}>  (//This route will return the navbar)
+            <Route path='/main' element={<Main/>}/>  (//Child route will return the navbar and the main component, effectively you get two components)
+            <Route path='/something1' element={<Parent string={"SOMETHING 1"}/>}/>
+            <Route path='/something2' element={<Child string={"SOMETHIGN 2"}/>}/>
+          </Route>
+
+          {/* <Route path='/' element={<Layout/>}></Route>
+          <Route path='/something' element={<Layout/>}></Route> */}
+
+
+           {/* <Route path='/parent' element={<Parent string={"PARENT"}/>}></Route>
+           <Route path='/parent/parent1' element={<Parent1 string={"PARENT1"}/>}/>
+           <Route path='/parent/parent2' element={<Parent1 string={"PARENT2"}/>}/>
+           <Route path='/parent/parent3' element={<Parent1 string={"PARENT3"}/>}/> */}
+      </Routes>
+    </BrowserRouter>
+  )
+}
