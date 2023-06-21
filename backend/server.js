@@ -64,7 +64,7 @@ app.delete(`/v1/api/animals`, async (req, res) => {
 
 app.post(`/v1/api/userRegister`, async (req, res) => {
     try {
-        const { name, date_of_birth, gender, country, city, street, userName, password, e_mail_adress, tel_number, credit_card, cvc, expirationDate } = req.body;
+        const { name, date_of_birth, gender, country, city, street, user_name, password, e_mail_address, tel_number, credit_card, cvc, expiration_date, created_at } = req.body;
         console.log(req.body);
         const newUser = new RegUser({
             name: name,
@@ -73,13 +73,14 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
             country: country,
             city: city,
             street: street,
-            userName: userName,
+            user_name: user_name,
             password: password,
-            e_mail_adress: e_mail_adress,
+            e_mail_address: e_mail_address,
             tel_number: tel_number,
             credit_card: credit_card,
             cvc: cvc,
-            expirationDate: expirationDate
+            expiration_date: expiration_date,
+            created_at: created_at
         })
         const savedRegUser = await newUser.save();
         res.json(savedRegUser);

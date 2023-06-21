@@ -1,22 +1,27 @@
 import { React, useState } from 'react';
 
 export default function RegistrationForm() {
-    const [ isUnderAge, setIsUnderAge ] = useState(null);
+
+  const nowDate = Date.now();
+  const date = new Date(nowDate);
+
+    const [ properAge, setProperAge ] = useState(null);
     const [ reg, setReg ] = useState({
         name: '',
-        dateOfBirth: '',
+        date_of_birth: '',
         gender: 'Male',
         country: '',
         city: '',
         street: '',
-        userName: '',
+        user_name: '',
         password: '',
-        confirmPassword: '',
-        email: '',
-        tel: '',
-        creditCardNumber: '',
+        confirm_password: '',
+        e_mail_address: '',
+        tel_number: '',
+        credit_card: '',
         cvc: '',
-        expirationDate: '',
+        expiration_date: '',
+        created_at: date
       });
 
     const handleChange = (name, event) => {
@@ -27,11 +32,11 @@ export default function RegistrationForm() {
     const handleChangeDOB = (event) => {
       const { name, value } = event.target;
       setReg((prevReg) => ({ ...prevReg, [name]: value }));
-      setIsUnderAge(underAgeValidate(value));
+      setProperAge(underAgeValidate(value));
     };
 
     const handleSubmitButton = async () => {
-      if (isUnderAge) {
+      if (properAge) {
         try {
           await fetch('http://127.0.0.1:3000/v1/api/userRegister', {
             method: "POST",
@@ -53,7 +58,7 @@ export default function RegistrationForm() {
       <form>
         Registration <br/>
         name: <input onChange={(event) => handleChange("name", event)} placeholder="Your Name" />
-        date of birth: <input type="date" name="dateOfBirth" value={reg.dateOfBirth} onChange = { handleChangeDOB }/> <br/>
+        date of birth: <input type="date" name="date_of_birth" value={reg.date_of_birth} onChange = { handleChangeDOB }/> <br/>
         gender: <select onChange={(event) => handleChange("gender", event)}>
                     <option>Male</option>
                     <option>Female</option>
@@ -61,14 +66,14 @@ export default function RegistrationForm() {
         country: <input onChange={(event) => handleChange("country", event)} placeholder="In which country you live"/> <br/>
         city: <input onChange={(event) => handleChange("city", event)} placeholder='In which city you live'/> <br/>
         street: <input onChange={(event) => handleChange("street", event)} placeholder='In which street you are living'/> <br/>
-        username: <input onChange={(event) => handleChange("userName", event)} placeholder='Your username to make login easier'/> <br/>
+        username: <input onChange={(event) => handleChange("user_name", event)} placeholder='Your username to make login easier'/> <br/>
         password: <input onChange={(event) => handleChange("password", event)} placeholder='Password'/> <br/>
-        confirm password: <input onChange={(event) => handleChange("confirmPassword", event)} placeholder='Confirm password'/> <br/>
-        e-mail: <input onChange={(event) => handleChange("email", event)} placeholder='user@gmail.com'/> <br/>
-        tel: <input onChange={(event) => handleChange("tel", event)} placeholder='+00-00-000-0000'/> <br/>
-        credit card number: <input onChange={(event) => handleChange("creditCardNumber", event)} placeholder='0000-0000-0000-0000'/> <br/>
+        confirm password: <input onChange={(event) => handleChange("confirm_password", event)} placeholder='Confirm password'/> <br/>
+        e-mail: <input onChange={(event) => handleChange("e_mail_address", event)} placeholder='user@gmail.com'/> <br/>
+        tel: <input onChange={(event) => handleChange("tel_number", event)} placeholder='+00-00-000-0000'/> <br/>
+        credit card number: <input onChange={(event) => handleChange("credit_card", event)} placeholder='0000-0000-0000-0000'/> <br/>
         cvc: <input onChange={(event) => handleChange("cvc", event)} placeholder='000'/> <br/>
-        expiration date: <input onChange={(event) => handleChange("expirationDate", event)} placeholder='01-26'/> <br/>
+        expiration date: <input onChange={(event) => handleChange("expiration_date", event)} placeholder='01-26'/> <br/>
         <button type="Submit" onClick = { handleSubmitButton }>Submit</button>
       </form>
     </div>

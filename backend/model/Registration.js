@@ -8,13 +8,14 @@ const registerSchema = new Schema({
     country: String,
     city: String,
     street: String,
-    userName: String,
+    user_name: String,
     password: String,
     e_mail_adress: String,
     tel_number: String,
     credit_card: String,
     cvc: String,
-    expirationDate: String
+    expiration_date: String,
+    created_at: Date
 })
 
 const RegUser = model(`User`, registerSchema, "Registered Users");
