@@ -6,8 +6,8 @@ export default function DogDetails({ pickedDog }) {
     const [ switchMeasure, setSwitchMeasure ] = useState(true);
     const [ weightMeasure, setWeightMeasure ] = useState(1);
     const [ heightMeasure, setHeightMeasure ] = useState(1);
-    const [ weightString, setWeightString] = useState("pounds");
-    const [ heightString, setHeightString] = useState("inches");
+    const [ weightString, setWeightString ] = useState("pounds");
+    const [ heightString, setHeightString ] = useState("inches");
 
     const switchHandler = () => {
         if (!switchMeasure) {
@@ -50,12 +50,12 @@ export default function DogDetails({ pickedDog }) {
         {pickedDog.min_height_female !== pickedDog.max_height_female
               ? (
                 <div>
-                    <span className="detail-label">Height: </span>
+                    <span className="detail-label">and Height: </span>
                     <span>{Math.floor(pickedDog.min_height_female * heightMeasure)} to {Math.ceil(pickedDog.max_height_female * heightMeasure)} {heightString}</span>
                 </div>
             ) : (
                 <div>
-                    <span className="detail-label">Height: </span>
+                    <span className="detail-label">and Height: </span>
                     <span>up to {Math.ceil(pickedDog.max_height_female * heightMeasure)} {heightString}</span>
                 </div>
                 )}
@@ -76,15 +76,16 @@ export default function DogDetails({ pickedDog }) {
         {pickedDog.min_height_male !== pickedDog.max_height_male
               ? (
                 <div>
-                    <span className="detail-label">Height: </span>
+                    <span className="detail-label">and Height: </span>
                     <span>{Math.floor(pickedDog.min_height_male * heightMeasure)} to {Math.ceil(pickedDog.max_height_male * heightMeasure)} {heightString}</span>
                 </div>
             ) : (
                 <div>
-                    <span className="detail-label">Height: </span>
+                    <span className="detail-label">and Height: </span>
                     <span>up to {Math.ceil(pickedDog.max_height_male * heightMeasure)} {heightString}</span>
                 </div>
                 )}
+                
         <div><span className="detail-label">Expected life expectancy: </span><span>{pickedDog.min_life_expectancy} years</span></div>
         <button onClick={switchHandler}>Switch measure system</button>
     </div>

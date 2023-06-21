@@ -4,10 +4,19 @@ import DogDetails from './DogDetails';
 import './design/DogElements.css';
 
 export default function DogElements({ result }) {
-  const [pickedDog, setPickedDog] = useState(null);
+  const [ pickedDog, setPickedDog ] = useState(null);
+  const [ detailButton, setDetailButton ] = useState("More About");
+  const [ detailed, setDetailed ] = useState(false);
 
   const detailHandler = (element) => {
-    setPickedDog(element);
+    if (!detailed){
+      setPickedDog(element);
+      setDetailButton("Less about");
+      setDetailed(true);
+    } else {
+      setDetailButton("More about");
+      setDetailed(false);
+    }
   };
 
   return (
@@ -20,7 +29,7 @@ export default function DogElements({ result }) {
               <div className="dog-image-container">
                 <img src={element.image_link} alt="No img" className="dog-image" />
                 <button className="more-details-button" onClick={() => detailHandler(element)}>
-                  More About {element.name}
+                  {detailButton} {element.name}
                 </button>
               </div>
             </div>
@@ -31,7 +40,11 @@ export default function DogElements({ result }) {
       ) : (
         void 0
       )}
-      {pickedDog && <DogDetails pickedDog={pickedDog} />}
+      {detailed ? (
+                  pickedDog && <DogDetails pickedDog={pickedDog} />
+              ) : (
+                  void 0
+                  )}
     </div>
   );
 }
