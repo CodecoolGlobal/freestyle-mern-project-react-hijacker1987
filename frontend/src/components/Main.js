@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import './Main.css';
 import DogElements from './DogElements';
 import Favourite from './Favourite';
+
+import './design/Main.css';
 
 const { API_key } = require("./tokenFile");
 

@@ -1,11 +1,11 @@
-import './App.css';
-
 import { React } from 'react';
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 
 import Layout from './components/Layout';
 import Main from './components/Main';
 import RegistrationForm from './components/RegistrationForm';
+
+import './App.css';
 
 function Parent({string}) {
     return (

@@ -16,12 +16,13 @@ img {
   button:hover {
     background-color: #c0392b;
   }
+  
   .dog-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 400px; /* A kép szélességét itt tudod módosítani */
-    height: 300px; /* A kép magasságát itt tudod módosítani */
+    width: 400px; 
+    height: 300px; 
     margin-bottom: 10px;
     perspective: 600px;
     transform-style: preserve-3d;

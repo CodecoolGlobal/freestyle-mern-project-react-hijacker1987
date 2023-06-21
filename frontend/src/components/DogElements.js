@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import DogDetails from './DogDetails';
-import './DogElements.css';
+
+import './design/DogElements.css';
 
 export default function DogElements({ result }) {
   const [pickedDog, setPickedDog] = useState(null);

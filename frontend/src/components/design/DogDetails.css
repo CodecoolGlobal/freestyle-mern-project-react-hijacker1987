@@ -1,3 +1,15 @@
+body {
+  background-image: url(https://wallpaperaccess.com/full/3292327.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.content {
+  height: 100vh;
+  overflow: auto;
+}
+
 .dog-details {
     font-family: Arial, sans-serif;
     color: #fff;
@@ -39,15 +51,4 @@
     margin-bottom: 0;
   }
   
-  body {
-    background-image: url(https://wallpaperaccess.com/full/3292327.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-  }
-  
-  .content {
-    height: 100vh;
-    overflow: auto;
-  }
    

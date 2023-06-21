@@ -28,14 +28,17 @@ export default function RegistrationForm() {
     setReg((prevReg) => ({ ...prevReg, [name]: value }));
     };
 
-    console.log(reg);
+    const handleSubmitButton = () => {
+      
+    }
 
   return (
     <div>
+      <form>
         Registration <br/>
         name: <input onChange={(event) => handleChange("name", event)} placeholder="Your Name" />
         date of birth: <input type="date" name="dateOfBirth" value={reg.dateOfBirth} onChange = { handleChangeDOB }/> <br/>
-        gender: <select>
+        gender: <select onChange={(event) => handleChange("gender", event)}>
                     <option>Male</option>
                     <option>Female</option>
                 </select> <br/>
@@ -50,6 +53,8 @@ export default function RegistrationForm() {
         credit card number: <input onChange={(event) => handleChange("creditCardNumber", event)} placeholder='0000-0000-0000-0000'/> <br/>
         cvc: <input onChange={(event) => handleChange("cvc", event)} placeholder='000'/> <br/>
         expiration date: <input onChange={(event) => handleChange("expirationDate", event)} placeholder='01-26'/> <br/>
+        <button onSubmit = { handleSubmitButton }>Submit</button>
+      </form>
     </div>
   )
 }
