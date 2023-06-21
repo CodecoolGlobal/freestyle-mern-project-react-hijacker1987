@@ -82,11 +82,10 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
             expirationDate: expirationDate
         })
         const savedRegUser = await newUser.save();
-        console.log("esssssszt skubizd -> " + savedRegUser);
+
         res.json(savedRegUser);
     } catch (err) {
         res.status(500).send(`An error occured during register.`);
-        console.log("Hibára fut");
     }
 })
 
