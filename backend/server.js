@@ -5,7 +5,8 @@ const { token } = require("./tokenFile");
 const app = express();
 const port = 3000;
 
-let Animal = require(`./model/Animals`);
+const Animal = require(`./model/Animals`);
+const RegUser = require(`./model/Registration`)
 
 app.use(express.json());
 
@@ -60,5 +61,41 @@ app.delete(`/v1/api/animals`, async (req, res) => {
         res.status(500).send(`An error occured during deletion.`);
     }
 })
+
+app.post(`/v1/api/userRegister`, async (req, res) => {
+    try {
+        console.log("Zadat" + req.body);
+        const { name, date_of_birth, gender, country, city, street, userName, password, e_mail_adress, tel_number, credit_card, cvc, expirationDate } = req.body;
+        const newUser = new RegUser({
+            name: name,
+            date_of_birth: date_of_birth,
+            gender: gender,
+            country: country,
+            city: city,
+            street: street,
+            userName: userName,
+            password: password,
+            e_mail_adress: e_mail_adress,
+            tel_number: tel_number,
+            credit_card: credit_card,
+            cvc: cvc,
+            expirationDate: expirationDate
+        })
+        const savedRegUser = await newUser.save();
+        console.log("esssssszt skubizd -> " + savedRegUser);
+        res.json(savedRegUser);
+    } catch (err) {
+        res.status(500).send(`An error occured during register.`);
+        console.log("Hibára fut");
+    }
+})
+
+// app.delete(`/vi/api/userRegister`, async (req, res) => {
+//     try{
+
+//     } catch (err) {
+//         res.status(500).send(`An error occured during deletion.`);
+//     }
+// })
 
 app.listen(port, () => console.log(`Server running on: http://127.0.0.1:${port}`));

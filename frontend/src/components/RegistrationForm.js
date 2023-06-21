@@ -28,8 +28,18 @@ export default function RegistrationForm() {
     setReg((prevReg) => ({ ...prevReg, [name]: value }));
     };
 
-    const handleSubmitButton = () => {
-      
+    const handleSubmitButton = async () => {
+      try {
+        await fetch('http://127.0.0.1:3000/v1/api/userRegister', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(reg)
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
 
   return (
@@ -53,7 +63,7 @@ export default function RegistrationForm() {
         credit card number: <input onChange={(event) => handleChange("creditCardNumber", event)} placeholder='0000-0000-0000-0000'/> <br/>
         cvc: <input onChange={(event) => handleChange("cvc", event)} placeholder='000'/> <br/>
         expiration date: <input onChange={(event) => handleChange("expirationDate", event)} placeholder='01-26'/> <br/>
-        <button onSubmit = { handleSubmitButton }>Submit</button>
+        <button type="Submit" onClick = { handleSubmitButton }>Submit</button>
       </form>
     </div>
   )

@@ -1,8 +1,10 @@
-import React from 'react';
+import { React, useState } from 'react';
 
 import './design/DogDetails.css';
 
 export default function DogDetails({ pickedDog }) {
+    const [ weightMeasure, setWeightMeasure ] = useState(1);
+
   return (
     <div className="dog-details">
         <div>
@@ -39,9 +41,7 @@ export default function DogDetails({ pickedDog }) {
             ? (
                 <div>
                     <span className="detail-label">Female Weight:</span>
-                    <span>
-                        {pickedDog.min_weight_female} to {pickedDog.max_weight_female} pounds
-                    </span>
+                    <span>{pickedDog.min_weight_female} to {pickedDog.max_weight_female} pounds</span>
                 </div>
             ) : (
                 <div>
@@ -52,9 +52,7 @@ export default function DogDetails({ pickedDog }) {
         {pickedDog.min_height_female !== pickedDog.max_height_female ? (
                 <div>
                     <span className="detail-label">Height:</span>
-                    <span>
-                        {pickedDog.min_height_female} to {pickedDog.max_height_female} inches
-                    </span>
+                    <span>{pickedDog.min_height_female} to {pickedDog.max_height_female} inches</span>
                 </div>
             ) : (
                 <div>
@@ -65,9 +63,7 @@ export default function DogDetails({ pickedDog }) {
         {pickedDog.min_weight_male !== pickedDog.max_weight_male ? (
                 <div>
                     <span className="detail-label">Male Weight:</span>
-                    <span>
-                        {pickedDog.min_weight_male} to {pickedDog.max_weight_male} pounds
-                    </span>
+                    <span>{pickedDog.min_weight_male} to {pickedDog.max_weight_male} pounds</span>
                 </div>
             ) : (
                 <div>
@@ -78,9 +74,7 @@ export default function DogDetails({ pickedDog }) {
         {pickedDog.min_height_male !== pickedDog.max_height_male ? (
                 <div>
                     <span className="detail-label">Height:</span>
-                    <span>
-                        {pickedDog.min_height_male} to {pickedDog.max_height_male} inches
-                    </span>
+                    <span>{pickedDog.min_height_male} to {pickedDog.max_height_male} inches</span>
                 </div>
             ) : (
                 <div>
@@ -88,6 +82,7 @@ export default function DogDetails({ pickedDog }) {
                     <span>up to {pickedDog.max_height_male} inches</span>
                 </div>
             )}
+
         <div>
             <span className="detail-label">Expected life expectancy:</span>
             <span>{pickedDog.min_life_expectancy} years</span>

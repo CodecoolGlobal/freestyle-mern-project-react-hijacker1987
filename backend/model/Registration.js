@@ -12,9 +12,11 @@ const registerSchema = new Schema({
     password: String,
     e_mail_adress: String,
     tel_number: Number,
-    credit_card: Number
+    credit_card: Number,
+    cvc: Number,
+    expirationDate: Number
 })
 
-const User = model(`Animal`, registerSchema);
+const RegUser = model(`User`, registerSchema, "Registered Users");
 
-module.exports = User;
+module.exports = RegUser;
