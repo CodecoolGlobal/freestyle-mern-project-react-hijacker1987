@@ -2,8 +2,10 @@ const express = require(`express`);
 const mongoose = require(`mongoose`);
 const { token, API_key } = require("./tokenFile");
 
+const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
+const saltRounds = 2;
 
 const Animal = require(`./model/Animals`);
 const RegUser = require(`./model/Registration`)
@@ -87,32 +89,51 @@ app.delete(`/v1/api/animals`, async (req, res) => {
     }
 })
 
+const generateCyberSecurity = async (element) => {
+    const generatedSecurePassword = await bcrypt.hash(element, saltRounds);
+    return generatedSecurePassword;
+};
+
+//     bcrypt.compare(`haha`, hashedPasswordFromDB, (err, result) => {
+//       if (err) {
+//         console.error('Error comparing passwords:', err);
+//         return;
+//       }
+  
+//       if (result) {
+//         console.log('Password match!');
+//       } else {
+//         console.log('Password does not match!');
+//       }
+//     });
+  
 app.post(`/v1/api/userRegister`, async (req, res) => {
     try {
         const { name, date_of_birth, gender, country, city, street, user_name, password, e_mail_address, tel_number, credit_card, cvc, expiration_date, created_at } = req.body;
-        console.log(req.body);
+        const hashedPassword = await generateCyberSecurity(password);
+        const hashedCreditCard = await generateCyberSecurity(credit_card);
         const newUser = new RegUser({
-            name: name,
-            date_of_birth: date_of_birth,
-            gender: gender,
-            country: country,
-            city: city,
-            street: street,
-            user_name: user_name,
-            password: password,
-            e_mail_address: e_mail_address,
-            tel_number: tel_number,
-            credit_card: credit_card,
-            cvc: cvc,
-            expiration_date: expiration_date,
-            created_at: created_at
-        })
+        name: name,
+        date_of_birth: date_of_birth,
+        gender: gender,
+        country: country,
+        city: city,
+        street: street,
+        user_name: user_name,
+        password: hashedPassword,
+        e_mail_address: e_mail_address,
+        tel_number: tel_number,
+        credit_card: hashedCreditCard,
+        cvc: cvc,
+        expiration_date: expiration_date,
+        created_at: created_at
+        });
         const savedRegUser = await newUser.save();
         res.json(savedRegUser);
     } catch (err) {
-        res.status(500).send(`An error occured during register.`);
+        res.status(500).send(`An error occurred during register.`);
     }
-})
+});
 
 // app.delete(`/vi/api/userRegister`, async (req, res) => {
 //     try{
