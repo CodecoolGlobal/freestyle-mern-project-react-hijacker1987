@@ -85,7 +85,6 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
         res.json(savedRegUser);
     } catch (err) {
         res.status(500).send(`An error occured during register.`);
-        console.log("Hibára fut");
     }
 })
 
