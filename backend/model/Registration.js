@@ -11,10 +11,10 @@ const registerSchema = new Schema({
     userName: String,
     password: String,
     e_mail_adress: String,
-    tel_number: Number,
-    credit_card: Number,
-    cvc: Number,
-    expirationDate: Number
+    tel_number: String,
+    credit_card: String,
+    cvc: String,
+    expirationDate: String
 })
 
 const RegUser = model(`User`, registerSchema, "Registered Users");
