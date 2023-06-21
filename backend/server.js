@@ -64,8 +64,8 @@ app.delete(`/v1/api/animals`, async (req, res) => {
 
 app.post(`/v1/api/userRegister`, async (req, res) => {
     try {
-        console.log("Zadat" + req.body);
         const { name, date_of_birth, gender, country, city, street, userName, password, e_mail_adress, tel_number, credit_card, cvc, expirationDate } = req.body;
+        console.log(req.body);
         const newUser = new RegUser({
             name: name,
             date_of_birth: date_of_birth,
@@ -82,7 +82,6 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
             expirationDate: expirationDate
         })
         const savedRegUser = await newUser.save();
-        console.log("esssssszt skubizd -> " + savedRegUser);
         res.json(savedRegUser);
     } catch (err) {
         res.status(500).send(`An error occured during register.`);
@@ -97,5 +96,20 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
 //         res.status(500).send(`An error occured during deletion.`);
 //     }
 // })
+
+RegUser.findByName = async function (userName) {
+    return await this.findOne({ userName });
+};
+
+app.get('/v1/api/login', async (req, res) => {
+    try {
+        const query = JSON.parse(req.query.query);
+        const registeredUser = await RegUser.findByName(query.userName);
+        const success = registeredUser && registeredUser.password === query.password;
+        res.json({ success });
+    } catch (err) {
+        res.status(500).send('An error occurred during login.');
+    }
+  });
 
 app.listen(port, () => console.log(`Server running on: http://127.0.0.1:${port}`));

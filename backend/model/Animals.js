@@ -21,6 +21,6 @@ const animalSchema = new Schema({
     min_life_expentancy: Number
 })
 
-const Animal = model(`Animal`, animalSchema, "Animals");
+const Animal = model(`Animal`, animalSchema, "FavAnimals");
 
 module.exports = Animal;

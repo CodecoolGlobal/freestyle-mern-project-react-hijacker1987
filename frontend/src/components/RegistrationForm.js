@@ -8,7 +8,7 @@ export default function RegistrationForm() {
         country: '',
         city: '',
         street: '',
-        username: '',
+        userName: '',
         password: '',
         confirmPassword: '',
         email: '',
@@ -53,9 +53,9 @@ export default function RegistrationForm() {
                     <option>Female</option>
                 </select> <br/>
         country: <input onChange={(event) => handleChange("country", event)} placeholder="In which country you live"/> <br/>
-        city: <input onChange={(event) => handleChange("ciry", event)} placeholder='In which city you live'/> <br/>
+        city: <input onChange={(event) => handleChange("city", event)} placeholder='In which city you live'/> <br/>
         street: <input onChange={(event) => handleChange("street", event)} placeholder='In which street you are living'/> <br/>
-        username: <input onChange={(event) => handleChange("username", event)} placeholder='Your username to make login easier'/> <br/>
+        username: <input onChange={(event) => handleChange("userName", event)} placeholder='Your username to make login easier'/> <br/>
         password: <input onChange={(event) => handleChange("password", event)} placeholder='Password'/> <br/>
         confirm password: <input onChange={(event) => handleChange("confirmPassword", event)} placeholder='Confirm password'/> <br/>
         e-mail: <input onChange={(event) => handleChange("email", event)} placeholder='user@gmail.com'/> <br/>

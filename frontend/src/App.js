@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Layout from './components/Layout';
 import Main from './components/Main';
 import RegistrationForm from './components/RegistrationForm';
+import LoginUser from './components/LoginUser';
 
 import './App.css';
 
@@ -33,7 +34,8 @@ export default function App() {
           <Route path='/' element={<Layout/>}>  (//This route will return the navbar)
             <Route path='/main' element={<Main/>}/>  (//Child route will return the navbar and the main component, effectively you get two components)
             <Route path='/register' element={<RegistrationForm/>}/>
-            <Route path='/account' element={<Child string={"ACC"}/>}/>
+            <Route path='/account' element={<LoginUser/>}
+            />
           </Route>
 
           {/* <Route path='/' element={<Layout/>}></Route>
