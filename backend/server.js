@@ -93,19 +93,6 @@ const generateCyberSecurity = async (element) => {
     const generatedSecurePassword = await bcrypt.hash(element, saltRounds);
     return generatedSecurePassword;
 };
-
-//     bcrypt.compare(`haha`, hashedPasswordFromDB, (err, result) => {
-//       if (err) {
-//         console.error('Error comparing passwords:', err);
-//         return;
-//       }
-  
-//       if (result) {
-//         console.log('Password match!');
-//       } else {
-//         console.log('Password does not match!');
-//       }
-//     });
   
 app.post(`/v1/api/userRegister`, async (req, res) => {
     try {
@@ -143,15 +130,29 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
 //     }
 // })
 
+const comparePasswords = async (notCyberSecurity, yesCyberSecurity) => {
+  try {
+    const result = await bcrypt.compare(notCyberSecurity, yesCyberSecurity);
+    if (result) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error('Error comparing passwords:', error);
+    return false;
+  }
+};
+
 RegUser.findByName = async function (userName) {
     return await this.findOne({ userName });
 };
 
 app.get('/v1/api/login', async (req, res) => {
-    try {
+  try {
         const query = JSON.parse(req.query.query);
-        const registeredUser = await RegUser.findByName(query.userName);
-        const success = registeredUser && registeredUser.password === query.password;
+        const registeredUser = await RegUser.findByName(query.user_name);
+        const success = await comparePasswords(query.password, registeredUser.password);
         res.json({ success });
     } catch (err) {
         res.status(500).send('An error occurred during login.');
