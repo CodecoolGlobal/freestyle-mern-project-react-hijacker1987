@@ -1,0 +1,35 @@
+
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .navbar button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .navbar button:hover {
+    background-color: #45a049;
+  }
+  .layout-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    text-align: center; /* Új sor: középre igazított szöveg */
+  }
+  
+  .layout-container .dog-elements {
+    margin-top: 20px; /* Új szabály: távolság az elemek között */
+  }
+  
