@@ -4,25 +4,14 @@ import Favourite from './Favourite';
 
 import './design/Main.css';
 
-const { API_key } = require("./tokenFile");
-
 export default function Main() {
   const [inputChange, setInputChange] = useState('');
   const [result, setResult] = useState(null);
 
-  const handleSubmitButton = (event) => {
+  const handleSubmitButton = async (event) => {
     event.preventDefault();
-    fetchData(`https://api.api-ninjas.com/v1/dogs?name=${inputChange}`);
-  };
-
-  const fetchData = async (api) => {
     try {
-      const response = await fetch(api, {
-        headers: {
-          'X-Api-Key': API_key,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(`http://localhost:3000/v1/api/data?name=${inputChange}`);
       const jsonData = await response.json();
       setResult(jsonData);
     } catch (error) {

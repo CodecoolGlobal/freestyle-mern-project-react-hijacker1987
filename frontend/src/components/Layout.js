@@ -8,8 +8,7 @@ export default function Layout() {
     <div className="layout-container">
       <div className='navbar'>
         <Link to='/main'><button>Main page</button></Link>
-        <Link to='/register'><button>Register</button></Link>
-        <Link to='/account'><button>Login</button></Link>
+        <Link to='/account'><button>Login / Register</button></Link>
       </div>
       <Outlet />
     </div>

@@ -1,6 +1,6 @@
 const express = require(`express`);
 const mongoose = require(`mongoose`);
-const { token } = require("./tokenFile");
+const { token, API_key } = require("./tokenFile");
 
 const app = express();
 const port = 3000;
@@ -17,11 +17,36 @@ app.use(function(req, res, next) {
     next();
 });
 
-mongoose.connect(token);
+app.get('/', (req, res) => {
+    res.redirect('/v1/api/animals');
+  });
 
-app.get(`/`, (req, res) => {
-    res.redirect(`/v1/api/animals`);
-})
+const fetchData = async (api) => {
+    try {
+      const response = await fetch(api, {
+        headers: {
+          'X-Api-Key': API_key,
+          'Content-Type': 'application/json',
+        },
+      });
+      const jsonData = await response.json();
+      return jsonData;
+    } catch (error) {
+      console.log('Error fetching Data:', error);
+      throw new Error('Error fetching data');
+    }
+  };
+  
+  app.get('/v1/api/data', async (req, res) => {
+    try {
+      const { name } = req.query;
+      const api = `https://api.api-ninjas.com/v1/dogs?name=${name}`;
+      const jsonData = await fetchData(api);
+      res.json(jsonData);
+    } catch (error) {
+      res.status(500).json({ error: 'Error fetching data' });
+    }
+  });
 
 app.post(`v1/api/animals`, async (req, res) => {
     try {
@@ -113,3 +138,5 @@ app.get('/v1/api/login', async (req, res) => {
   });
 
 app.listen(port, () => console.log(`Server running on: http://127.0.0.1:${port}`));
+
+mongoose.connect(token);

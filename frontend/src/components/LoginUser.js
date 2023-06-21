@@ -1,4 +1,5 @@
-import { React, useState } from 'react'
+import { React, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function LoginUser() {
 
@@ -35,20 +36,23 @@ export default function LoginUser() {
     return (
         <div>
             <p>{ logIn }</p>
-            {loggedIn? (
+            {loggedIn ? (
                 <div>
                     <button onClick = { handleLogOut }>Log out</button>
                 </div>
             ) : (
                 <div>
+                    <h4>Please type in Your</h4>
                     <form>
-                        Username: <input onChange={(event) => handleChange("userName", event)} placeholder='Username'></input>
-                        Password: <input onChange={(event) => handleChange("password", event)} placeholder='password'></input>
+                        <input onChange={(event) => handleChange("userName", event)} placeholder='Username'></input> and <input
+                                                                    onChange={(event) => handleChange("password", event)} placeholder='password'></input><h4>than press</h4>
                     </form>
-                    <button onClick = { handleSubmitButton }>Login</button>
+                    <button onClick={handleSubmitButton}>Login</button><br/>
+                    <h4>if You don't have an account</h4>
+                    <h4>please advance to</h4>
+                    <Link to="/register"><button>Register</button></Link>
                 </div>
-
-            )}
+                )}
         </div>
     )
 }
