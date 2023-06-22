@@ -19,40 +19,46 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/', (req, res) => {
-    res.redirect('/v1/api/animals');
-  });
-
 const fetchData = async (api) => {
-    try {
-      const response = await fetch(api, {
-        headers: {
-          'X-Api-Key': API_key,
-          'Content-Type': 'application/json',
-        },
-      });
-      const jsonData = await response.json();
-      return jsonData;
-    } catch (error) {
-      console.log('Error fetching Data:', error);
-      throw new Error('Error fetching data');
-    }
-  };
-  
-  app.get('/v1/api/data', async (req, res) => {
-    try {
-      const { name } = req.query;
-      const api = `https://api.api-ninjas.com/v1/dogs?name=${name}`;
-      const jsonData = await fetchData(api);
-      res.json(jsonData);
-    } catch (error) {
-      res.status(500).json({ error: 'Error fetching data' });
-    }
-  });
+  try {
+    const response = await fetch(api, {
+      headers: {
+        'X-Api-Key': API_key,
+        'Content-Type': 'application/json',
+      },
+    });
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.log('Error fetching Data:', error);
+    throw new Error('Error fetching data');
+  }
+};
 
-app.post(`v1/api/animals`, async (req, res) => {
-    try {
-        const {name, image, energy, barking, good_with_children, good_with_other_dogs, good_with_strangers, playfulness, min_weight_female, max_weight_female, min_weight_male, max_weight_male, min_height_female, max_height_female, min_height_male, max_height_male, min_life_expentancy} = req.body;
+app.get('/v1/api/data', async (req, res) => {
+  try {
+    const { name } = req.query;
+    const api = `https://api.api-ninjas.com/v1/dogs?name=${name}`;
+    const jsonData = await fetchData(api);
+    res.json(jsonData);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching data' });
+  }
+});
+
+app.get('/v1/api/animals', async (req, res) => {
+  try {
+    const getData = await Animal.find();
+    res.json(getData);
+  } catch (err) {
+    res.status(500).send('An error occurred while fetching animal data.');
+  }
+});
+
+app.post(`/v1/api/animals`, async (req, res) => {
+  console.log(req.body);
+  try {
+        const { name, image, energy, barking, good_with_children, good_with_other_dogs, good_with_strangers, playfulness, min_weight_female, max_weight_female, min_weight_male, max_weight_male, min_height_female, max_height_female, min_height_male, max_height_male, min_life_expentancy} = req.body;
         const newAnimal = new Animal({
             name: name,
             image: image,
@@ -164,6 +170,8 @@ app.get('/v1/api/login', async (req, res) => {
 app.patch(`/v1/api/:user`, async (req, res) => {
   const userName = req.params.user;
   const updatedData = req.body;
+  updatedData.password = await generateCyberSecurity(req.body.password);
+
   try {
         const registeredUser = await RegUser.findByName(userName.name);
         const updatedRegUser = await RegUser.findByIdAndUpdate(registeredUser._id, updatedData, { new: true });
@@ -176,29 +184,6 @@ app.patch(`/v1/api/:user`, async (req, res) => {
         res.status(500).json({ success: false });
     }
   });
-
-// app.patch(`/v1/api/password/:user`, async (req, res) => {
-//   console.log(req.params.user);
-//   const userName = req.params.user;
-//   try {
-//     const registeredUser = await RegUser.findByName(userName);
-//     const { password } = req.body;
-//     const hashedPassword = await bcrypt.hash(password, saltRounds);
-//     const updatedData = { password: hashedPassword };
-//     const updatedRegUser = await RegUser.findByIdAndUpdate(
-//       registeredUser._id,
-//       updatedData,
-//       { new: true }
-//     );
-//     if (!updatedRegUser) {
-//       res.status(404).send('User not found.');
-//       return;
-//     }
-//     res.json(updatedRegUser);
-//   } catch (err) {
-//     res.status(500).json({ success: false });
-//   }
-// });
 
 app.listen(port, () => console.log(`Server running on: http://127.0.0.1:${port}`));
 

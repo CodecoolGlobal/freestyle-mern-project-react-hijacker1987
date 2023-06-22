@@ -9,7 +9,9 @@ export default function UpdateAcc({ user, setUser, setLoggedIn }) {
       password: ``, 
       confirm_password: ``
     });
+    const [ showPass, setShowPass ] = useState("password");
     const [ updated, setUpdated ] = useState(false);
+    const [ edited, setEdited ] = useState(false);
     const [ toEdit, setToEdit ] = useState({});
 
     async function handleUpdate(userUp) {
@@ -31,13 +33,14 @@ export default function UpdateAcc({ user, setUser, setLoggedIn }) {
           if (response.ok) {
             setUpdatedName({});
             setLoggedIn(false);
-            alert("Successed");
+            setUpdated(true);
+            setTimeout(() => {navigate('/main'); setUpdated(false); setEdited(false)}, 5000);
           } else {
-            // User update failed
+            //User update failed
             console.error('User update failed');
           }
         } catch (error) {
-          // Error occurred during the request
+          //Error occurred during the request
           console.error('Error:', error);
         }
       }
@@ -52,6 +55,7 @@ export default function UpdateAcc({ user, setUser, setLoggedIn }) {
             ...prevUpdatedName,
             [userName]: user,
         }));
+        setEdited(true);
     }
 
     const handleChange = (prop, event) => {
@@ -59,26 +63,37 @@ export default function UpdateAcc({ user, setUser, setLoggedIn }) {
       setUpdatedPassword((prevReg) => ({ ...prevReg, [prop]: value }));
     }
 
-    console.log(updatedPassword);
+    const passHandler = (e) => {
+      e.preventDefault();
+      setShowPass((prevState) => prevState === "password" ? "text" : "password");
+    }
 
   return (
     <div>
         {!toEdit[user] ? (
-          user
+            void 0
           ) : (
             <div>
-              <div>Username change: </div><input type="text" value={updatedName[user] || ''} onChange={(e) => setUpdatedName((prevUpdatedName) => ({ ...prevUpdatedName, [user]: e.target.value }))} />
-              <div>Password change: </div><input type="password" onChange={(event) => handleChange("password", event)}/>
-              <div>Confirm password: </div><input type="password" onChange={(event) => handleChange("confirm_password", event)}/> <br/> <br/>
-              <button onClick={() => handleUpdate(user)}>Update username: </button> <br/> <br/>
+              {!updated ? (
+                        <div>Change Username: <input type="text" value={updatedName[user] || ''} onChange={(e) => setUpdatedName((prevUpdatedName) => ({ ...prevUpdatedName, [user]: e.target.value }))} />
+                        <div>Change Password: </div><input type={showPass} onChange={(event) => handleChange("password", event)}/>
+                        <div>Confirm password: </div><input type={showPass} onChange={(event) => handleChange("confirm_password", event)}/> <br/><br/> <button onClick={passHandler}>Show Password</button> <br/><br/>
+                        <button onClick={() => handleUpdate(user)}>Update</button> <br/> <br/></div>
+                      ) : (
+                        <div>
+                          <h2>Your data has been changed, please hang on!</h2>
+                          <p>You will be redirected to your account page in 5 seconds...</p>
+                        </div>
+                      )}
             </div>
           )}
           <div>
-            <button onClick={() => handleEdit(user)}>Edit</button> <br/> <br/>
-            <Link to='/delete'><button>Delete Account</button></Link>
+            {!edited ? (<div><button onClick={() => handleEdit(user)}>Edit</button> <br/> <br/>
+                        <Link to='/delete'><button>Delete Account</button></Link></div>
+                   ) : (
+                    void 0
+                   )}
           </div>
     </div>
   )
 }
-
-// Hahahehehihi123&

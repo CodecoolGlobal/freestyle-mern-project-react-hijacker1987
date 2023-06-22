@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function FavoritesList({ favorites }) {
+export default function FavouritesList({ favorites }) {
   return (
     <div className="favorites-list">
       <h2>Favorites</h2>

@@ -9,11 +9,13 @@ module.exports = {
 You can get your key by signup here: `https://api-ninjas.com/api/dogs` to get your API key!
 
 Create, Delete
-- register form to compare, details, favourites (add/delete)
+- register, details, favourites (add/delete)
 
 Patch
 - modify your own data
 
 Pictures same size, pics > 1 = pages
 
-"Own Location" - closest veterinar.
+Plans for next build:
+    - "Own Location" - closest veterinar.
+    - form to compare
