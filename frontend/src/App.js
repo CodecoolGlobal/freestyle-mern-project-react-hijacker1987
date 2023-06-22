@@ -1,51 +1,30 @@
-import { React } from 'react';
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import { React, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import Layout from './components/Layout';
 import Main from './components/Main';
-import RegistrationForm from './components/RegistrationForm';
+import Layout from './components/Layout';
 import LoginUser from './components/LoginUser';
+import UpdateAcc from './components/UpdateAcc';
+import DeleteAcc from './components/DeleteAcc';
+import RegistrationForm from './components/RegistrationForm';
 
 import './App.css';
 
-function Parent({string}) {
-    return (
-      <div>
-        {string}
-        <Outlet/>
-        <p>Hey I am some text</p>
-      </div>
-    )
-}
-
-function Child({string}) {
-  return (
-    <div>
-      {string}
-      <Outlet/>
-    </div>
-  )
-}
-
 export default function App() {
+
+  const [ loggedIn, setLoggedIn ] = useState(false);
+  const [ user, setUser ] = useState(null);
+
   return (
     <BrowserRouter>
       <Routes>
-          <Route path='/' element={<Layout/>}>  (//This route will return the navbar)
-            <Route path='/main' element={<Main/>}/>  (//Child route will return the navbar and the main component, effectively you get two components)
+          <Route path='/' element={<Layout loggedIn = { loggedIn }/>}>  (//This route will return the navbar)
+            <Route path='/main' element={<Main loggedIn = { loggedIn } />}/>  (//Child route will return the navbar and the main component, effectively you get two components)
             <Route path='/register' element={<RegistrationForm/>}/>
-            <Route path='/account' element={<LoginUser/>}
-            />
+            <Route path='/account' element={<LoginUser loggedIn = { loggedIn } setLoggedIn = { setLoggedIn } user = { user } setUser = { setUser }/>}/>
+            <Route path='/update' element={<UpdateAcc user = { user } setUser = { setUser } setLoggedIn = { setLoggedIn }/>}/>
+            <Route path='/delete' element={<DeleteAcc user = { user } setUser = { setUser } setLoggedIn = { setLoggedIn }/>}/>
           </Route>
-
-          {/* <Route path='/' element={<Layout/>}></Route>
-          <Route path='/something' element={<Layout/>}></Route> */}
-
-
-           {/* <Route path='/parent' element={<Parent string={"PARENT"}/>}></Route>
-           <Route path='/parent/parent1' element={<Parent1 string={"PARENT1"}/>}/>
-           <Route path='/parent/parent2' element={<Parent1 string={"PARENT2"}/>}/>
-           <Route path='/parent/parent3' element={<Parent1 string={"PARENT3"}/>}/> */}
       </Routes>
     </BrowserRouter>
   )
