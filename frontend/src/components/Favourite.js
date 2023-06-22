@@ -1,32 +1,29 @@
-import { React, useState } from 'react';
+import React, { useState } from 'react';
 
-export default function Favourite() {
-    const [ favourite, setFavourite ] = useState(null);
+const Favourite = ({ handleFavorite }) => {
+    const [favorite, setFavorite] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        try {
-            const response = await fetch('http://localhost:3000/v1/api/animals', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(favourite)
-            });
-
-            if (!response.ok) {
-            throw new Error('Request failed');
-            }
-            const result = await response.json();
-            console.log('Post created:', result);
-
-        } catch (error) {
-            console.error('Error:', error);
-        }
+        handleFavorite(favorite);
+        setFavorite('');
     };
 
-  return (
-    <div>Favourite</div>
-  )
-}
+    return (
+        <div className="favorite">
+            <h2>Add to Favorites</h2>
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={favorite}
+                    onChange={(e) => setFavorite(e.target.value)}
+                    placeholder="Enter a favorite"
+                    required
+                />
+                <button type="submit">Add</button>
+            </form>
+        </div>
+    );
+};
+
+export default Favourite;
