@@ -5,10 +5,18 @@ export default function UpdateAcc({ user, setUser, setLoggedIn }) {
   
     const navigate = useNavigate();
     const [ updatedName, setUpdatedName ] = useState({})
+    const [ updatedPassword, setUpdatedPassword] = useState({
+      password: ``, 
+      confirm_password: ``
+    });
     const [ updated, setUpdated ] = useState(false);
     const [ toEdit, setToEdit ] = useState({});
 
     async function handleUpdate(userUp) {
+      if (
+        updatedPassword.password === updatedPassword.confirm_password &&
+        /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])(?=.*[A-Z])[A-Za-z\d@$!%*#?&]{8,}$/.test(updatedPassword.password)
+      ) {
         try {
           const response = await fetch(`http://localhost:3000/v1/api/${userUp}`, {
             method: 'PATCH',
@@ -16,7 +24,8 @@ export default function UpdateAcc({ user, setUser, setLoggedIn }) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              name: updatedName[userUp],
+              user_name: updatedName[userUp],
+              password: updatedPassword.password,
             }),
           });
           if (response.ok) {
@@ -24,14 +33,15 @@ export default function UpdateAcc({ user, setUser, setLoggedIn }) {
             setLoggedIn(false);
             alert("Successed");
           } else {
-            // Todo update failed
-            console.error('Todo update failed');
+            // User update failed
+            console.error('User update failed');
           }
         } catch (error) {
           // Error occurred during the request
           console.error('Error:', error);
         }
       }
+    }
 
     function handleEdit(userName) {
         setToEdit((prevToEdit) => ({
@@ -44,29 +54,31 @@ export default function UpdateAcc({ user, setUser, setLoggedIn }) {
         }));
     }
 
+    const handleChange = (prop, event) => {
+      const { value } = event.target;
+      setUpdatedPassword((prevReg) => ({ ...prevReg, [prop]: value }));
+    }
+
+    console.log(updatedPassword);
+
   return (
     <div>
-        {!toEdit[user] ? user : <input type="text" value={updatedName[user] || ''} onChange={(e) => setUpdatedName((prevUpdatedName) => ({ ...prevUpdatedName, [user]: e.target.value }))} />}
-        <button onClick={() => handleEdit(user)}>Edit</button> <button onClick={() => handleUpdate(user)}>Update</button><Link to='/delete'><button>Delete Account</button></Link></div>
+        {!toEdit[user] ? (
+          user
+          ) : (
+            <div>
+              <div>Username change: </div><input type="text" value={updatedName[user] || ''} onChange={(e) => setUpdatedName((prevUpdatedName) => ({ ...prevUpdatedName, [user]: e.target.value }))} />
+              <div>Password change: </div><input type="password" onChange={(event) => handleChange("password", event)}/>
+              <div>Confirm password: </div><input type="password" onChange={(event) => handleChange("confirm_password", event)}/> <br/> <br/>
+              <button onClick={() => handleUpdate(user)}>Update username: </button> <br/> <br/>
+            </div>
+          )}
+          <div>
+            <button onClick={() => handleEdit(user)}>Edit</button> <br/> <br/>
+            <Link to='/delete'><button>Delete Account</button></Link>
+          </div>
+    </div>
   )
 }
 
-/*
-const [ reg, setReg ] = useState({
-    name: '',
-    date_of_birth: '',
-    gender: 'Male',
-    country: '',
-    city: '',
-    street: '',
-    user_name: '',
-    password: '',
-    confirm_password: '',
-    e_mail_address: '',
-    tel_number: '',
-    credit_card: '',
-    cvc: '',
-    expiration_date: '',
-    created_at: date
-  });
-  */
+// Hahahehehihi123&

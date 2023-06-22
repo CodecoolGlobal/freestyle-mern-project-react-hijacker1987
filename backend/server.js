@@ -122,7 +122,7 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
     }
 });
 
-app.delete(`/vi/api/delete`, async (req, res) => {
+app.delete(`/v1/api/delete`, async (req, res) => {
     try {
       const deleteAcc = req.body.username;
       await RegUser.deleteOne({ user_name: deleteAcc});
@@ -168,7 +168,7 @@ app.patch(`/v1/api/:user`, async (req, res) => {
         const registeredUser = await RegUser.findByName(userName.name);
         const updatedRegUser = await RegUser.findByIdAndUpdate(registeredUser._id, updatedData, { new: true });
         if (!updatedRegUser) {
-          res.status(404).send('Todo not found.');
+          res.status(404).send('User not found.');
           return;
         }
         res.json(updatedRegUser);
@@ -177,8 +177,29 @@ app.patch(`/v1/api/:user`, async (req, res) => {
     }
   });
 
+// app.patch(`/v1/api/password/:user`, async (req, res) => {
+//   console.log(req.params.user);
+//   const userName = req.params.user;
+//   try {
+//     const registeredUser = await RegUser.findByName(userName);
+//     const { password } = req.body;
+//     const hashedPassword = await bcrypt.hash(password, saltRounds);
+//     const updatedData = { password: hashedPassword };
+//     const updatedRegUser = await RegUser.findByIdAndUpdate(
+//       registeredUser._id,
+//       updatedData,
+//       { new: true }
+//     );
+//     if (!updatedRegUser) {
+//       res.status(404).send('User not found.');
+//       return;
+//     }
+//     res.json(updatedRegUser);
+//   } catch (err) {
+//     res.status(500).json({ success: false });
+//   }
+// });
+
 app.listen(port, () => console.log(`Server running on: http://127.0.0.1:${port}`));
 
 mongoose.connect(token);
-
-// Hahahehehihi123&

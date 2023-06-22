@@ -49,7 +49,7 @@ export default function LoginUser({ loggedIn, setLoggedIn, user, setUser }) {
                 <div>
                     <h4>Please type in Your</h4>
                     <form>
-                        <input onChange={(event) => handleChange("userName", event)} placeholder='Username'></input> and <input onChange={(event) => handleChange("password", event)} placeholder='password'></input><h4>than press</h4>
+                        <input onChange={(event) => handleChange("userName", event)} placeholder='Username'></input> and <input onChange={(event) => handleChange("password", event)} placeholder='password' type="password"></input><h4>than press</h4>
                     </form>
                     <button onClick={handleSubmitButton}>Login</button><br/>
                     <h4>if You don't have an account</h4>

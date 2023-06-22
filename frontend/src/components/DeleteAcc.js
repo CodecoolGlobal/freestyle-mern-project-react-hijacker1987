@@ -9,7 +9,7 @@ export default function DeleteAcc({ user, setUser, setLoggedIn }) {
     event.preventDefault();
     try {
       const username = user;
-      const response = await fetch(`http://localhost:3000/vi/api/delete`, {
+      const response = await fetch(`http://localhost:3000/v1/api/delete`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
