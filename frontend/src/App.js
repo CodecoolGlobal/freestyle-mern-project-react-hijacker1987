@@ -22,7 +22,7 @@ export default function App() {
             <Route path='/main' element={<Main loggedIn = { loggedIn } />}/>  (//Child route will return the navbar and the main component, effectively you get two components)
             <Route path='/register' element={<RegistrationForm/>}/>
             <Route path='/account' element={<LoginUser loggedIn = { loggedIn } setLoggedIn = { setLoggedIn } user = { user } setUser = { setUser }/>}/>
-            <Route path='/update' element={<UpdateAcc user = { user } setUser = { setUser }/>}/>
+            <Route path='/update' element={<UpdateAcc user = { user } setUser = { setUser } setLoggedIn = { setLoggedIn }/>}/>
             <Route path='/delete' element={<DeleteAcc user = { user } setUser = { setUser } setLoggedIn = { setLoggedIn }/>}/>
           </Route>
       </Routes>

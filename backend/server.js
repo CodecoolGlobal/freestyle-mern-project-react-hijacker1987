@@ -154,13 +154,31 @@ app.get('/v1/api/login', async (req, res) => {
   try {
         const query = JSON.parse(req.query.query);
         const registeredUser = await RegUser.findByName(query.user_name);
-        const success = await comparePasswords(query.password, registeredUser.password);
+        const success = await comparePasswords(query.password, registeredUser.password) && (query.userName === registeredUser.user_name);
         res.json({ success, user_name: registeredUser.user_name });
     } catch (err) {
         res.status(500).send('An error occurred during login.');
     }
   });
 
+app.patch(`/v1/api/:user`, async (req, res) => {
+  const userName = req.params.user;
+  const updatedData = req.body;
+  try {
+        const registeredUser = await RegUser.findByName(userName.name);
+        const updatedRegUser = await RegUser.findByIdAndUpdate(registeredUser._id, updatedData, { new: true });
+        if (!updatedRegUser) {
+          res.status(404).send('Todo not found.');
+          return;
+        }
+        res.json(updatedRegUser);
+    } catch (err) {
+        res.status(500).json({ success: false });
+    }
+  });
+
 app.listen(port, () => console.log(`Server running on: http://127.0.0.1:${port}`));
 
 mongoose.connect(token);
+
+// Hahahehehihi123&
