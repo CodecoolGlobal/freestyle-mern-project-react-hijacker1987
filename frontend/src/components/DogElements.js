@@ -3,7 +3,7 @@ import DogDetails from './DogDetails';
 
 import './design/DogElements.css';
 
-export default function DogElements({ result }) {
+export default function DogElements({ result, loggedIn }) {
   const [ pickedDog, setPickedDog ] = useState(null);
   const [ detailButton, setDetailButton ] = useState("More About");
   const [ detailed, setDetailed ] = useState(false);
@@ -41,7 +41,7 @@ export default function DogElements({ result }) {
         void 0
       )}
       {detailed ? (
-                  pickedDog && <DogDetails pickedDog={pickedDog} />
+                  pickedDog && <DogDetails loggedIn = { loggedIn } pickedDog = { pickedDog } />
               ) : (
                   void 0
                   )}

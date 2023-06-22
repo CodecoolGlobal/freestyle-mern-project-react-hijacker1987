@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import DogElements from './DogElements';
-import Favourite from './Favourite';
 
 import './design/Main.css';
 
-export default function Main() {
+export default function Main({ loggedIn }) {
   const [inputChange, setInputChange] = useState('');
   const [result, setResult] = useState(null);
 
@@ -32,7 +31,7 @@ export default function Main() {
         </button>
       </form>
       <div>
-        <DogElements result={result} />
+        <DogElements loggedIn = { loggedIn } result = { result } />
       </div>
     </div>
   );

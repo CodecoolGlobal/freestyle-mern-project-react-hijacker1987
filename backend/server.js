@@ -153,7 +153,7 @@ app.get('/v1/api/login', async (req, res) => {
         const query = JSON.parse(req.query.query);
         const registeredUser = await RegUser.findByName(query.user_name);
         const success = await comparePasswords(query.password, registeredUser.password);
-        res.json({ success });
+        res.json({ success, user_name: registeredUser.user_name });
     } catch (err) {
         res.status(500).send('An error occurred during login.');
     }
