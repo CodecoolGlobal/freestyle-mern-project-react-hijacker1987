@@ -122,13 +122,15 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
     }
 });
 
-// app.delete(`/vi/api/userRegister`, async (req, res) => {
-//     try{
-
-//     } catch (err) {
-//         res.status(500).send(`An error occured during deletion.`);
-//     }
-// })
+app.delete(`/vi/api/delete`, async (req, res) => {
+    try {
+      const deleteAcc = req.body.username;
+      await RegUser.deleteOne({ user_name: deleteAcc});
+      res.send(`Delete successful!`);
+    } catch (err) {
+        res.status(500).send(`An error occured during deletion.`);
+    }
+})
 
 const comparePasswords = async (notCyberSecurity, yesCyberSecurity) => {
   try {

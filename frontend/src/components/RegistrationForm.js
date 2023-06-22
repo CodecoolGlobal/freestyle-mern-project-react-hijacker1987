@@ -172,9 +172,7 @@ const formatPhoneNumber = (phoneNumber) => {
     }
     
     //Redirect to /account after a delay of 5 seconds
-    setTimeout(() => {
-      navigate('/account');
-    }, 5000);
+    setTimeout(() => {navigate('/account')}, 5000);
   };
 
   const passHandler = (e) => {
