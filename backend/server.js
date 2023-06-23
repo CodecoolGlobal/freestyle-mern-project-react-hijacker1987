@@ -99,7 +99,7 @@ const generateCyberSecurity = async (element) => {
     const generatedSecurePassword = await bcrypt.hash(element, saltRounds);
     return generatedSecurePassword;
 };
-  
+
 app.post(`/v1/api/userRegister`, async (req, res) => {
     try {
         const { name, date_of_birth, gender, country, city, street, user_name, password, e_mail_address, tel_number, credit_card, cvc, expiration_date, created_at } = req.body;

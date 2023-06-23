@@ -19,3 +19,5 @@ Pictures same size, pics > 1 = pages
 Plans for next build:
     - "Own Location" - closest veterinar.
     - form to compare
+    - to check .env
+    - validation function
