@@ -3,7 +3,7 @@ import DogElements from './DogElements';
 
 import './design/Main.css';
 
-export default function Main({ loggedIn, id }) {
+export default function Main({ loggedIn, id, loginUser }) {
   const [inputChange, setInputChange] = useState('');
   const [result, setResult] = useState(null);
 
@@ -31,7 +31,7 @@ export default function Main({ loggedIn, id }) {
         </button>
       </form>
       <div>
-        <DogElements loggedIn = { loggedIn } result = { result } id = { id } />
+        <DogElements loggedIn = { loggedIn } result = { result } id = { id } loginUser = { loginUser }/>
       </div>
     </div>
   );

@@ -55,6 +55,16 @@ app.get('/v1/api/animals', async (req, res) => {
   }
 });
 
+app.get('/v1/api/animals/:id', async (req, res) => {
+  const id = req.params.id;
+  try {
+    const getData = await Animal.findById(id);
+    res.json(getData);
+  } catch (err) {
+    res.status(500).send('An error occurred while fetching animal data.');
+  }
+});
+
 app.post(`/v1/api/animals`, async (req, res) => {
   console.log(req.body);
   try {
@@ -186,7 +196,7 @@ app.get('/v1/api/login', async (req, res) => {
         const query = JSON.parse(req.query.query);
         const registeredUser = await RegUser.findByName(query.user_name);
         const success = await comparePasswords(query.password, registeredUser.password) && (query.userName === registeredUser.user_name);
-        res.json({ success, user_name: registeredUser.user_name, _id: registeredUser._id });
+        res.json({ success, user_name: registeredUser.user_name, _id: registeredUser._id, dogReference: registeredUser.dogReference });
     } catch (err) {
         res.status(500).send('An error occurred during login.');
     }

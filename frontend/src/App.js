@@ -15,6 +15,7 @@ export default function App() {
   const [ loggedIn, setLoggedIn ] = useState(false);
   const [ user, setUser ] = useState(null);
   const [ id, setId ] = useState(``);
+  const [loginUser, setLoginUser] = useState({ userName: ``, password: ``});
 
   return (
     <BrowserRouter>
@@ -27,13 +28,13 @@ export default function App() {
               element={<Main loggedIn = { loggedIn } />}/>  (//Child route will return the navbar and the main component, effectively you get two components)
             <Route 
               path='/main/:id' 
-              element={<Main loggedIn = { loggedIn } id = { id } />}/>
+              element={<Main loggedIn = { loggedIn } id = { id } loginUser = { loginUser }/>}/>
             <Route 
               path='/register' 
               element={<RegistrationForm/>}/>
             <Route 
               path='/account' 
-              element={<LoginUser loggedIn = { loggedIn } setLoggedIn = { setLoggedIn } setId = { setId } setUser = { setUser }/>}/>
+              element={<LoginUser loggedIn = { loggedIn } setLoggedIn = { setLoggedIn } setId = { setId } setUser = { setUser } loginUser = { loginUser } setLoginUser = { setLoginUser } />}/>
             <Route 
               path='/update' 
               element={<UpdateAcc user = { user } setUser = { setUser } setLoggedIn = { setLoggedIn }/>}/>

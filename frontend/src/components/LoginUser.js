@@ -1,9 +1,9 @@
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LoginUser({ loggedIn, setLoggedIn, setUser, setId }) {
+export default function LoginUser({ loggedIn, setLoggedIn, setUser, setId, loginUser, setLoginUser }) {
 
-    const [loginUser, setLoginUser] = useState({ userName: ``, password: ``});
+    // const [loginUser, setLoginUser] = useState({ userName: ``, password: ``});
     const [logIn, setLogIn] = useState(``);
 
     const handleChange = (prop, event) => {

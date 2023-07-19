@@ -1,15 +1,15 @@
-import { React, useState } from 'react';
+import { React, useEffect, useState } from 'react';
 
 import './design/DogDetails.css';
 
-export default function DogDetails({ pickedDog, loggedIn, id }) {
+export default function DogDetails({ pickedDog, loggedIn, id, loginUser }) {
     const [ switchMeasure, setSwitchMeasure ] = useState(true);
     const [ weightMeasure, setWeightMeasure ] = useState(1);
     const [ heightMeasure, setHeightMeasure ] = useState(1);
     const [ weightString, setWeightString ] = useState("pounds");
     const [ heightString, setHeightString ] = useState("inches");
     const [ selectedFav, setSelectedFav ] = useState(false);
-    const [animalData, setAnimalData] = useState([]);
+    const [ animalData, setAnimalData ] = useState([]);
 
     const [ favAnimal, _setFavAnimal] = useState({
         name: pickedDog.name,
