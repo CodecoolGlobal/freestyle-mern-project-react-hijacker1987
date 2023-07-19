@@ -79,11 +79,37 @@ app.post(`/v1/api/animals`, async (req, res) => {
             min_life_expentancy: min_life_expentancy,
         });
         const savedAnimal = await newAnimal.save();
+
+        // Add the newly posted animal's ID to the user's dogReference field
+        const users = await RegUser.find();
+        const updatedDogReference = users.map(user => ({ userId: user._id, dogId: savedAnimal._id }));
+        await Promise.all(updatedDogReference.map(async ({ userId, dogId }) => {
+          await RegUser.findOneAndUpdate(
+            { _id: userId },
+            { $push: { dogReference: dogId } }
+          );
+        }));
+
         res.json(savedAnimal);
     } catch (err) {
         res.status(400).json({ success: false });
     }
-})
+});
+
+app.patch(`/v1/api/user/:id`, async (req, res, next) => {
+  try {
+    const user = await RegUser.findById(req.params.id);
+    const updatedDogReference = [...user.dogReference, req.body];
+    const updatedUser = await RegUser.findOneAndUpdate(
+      { _id: req.params.id },
+      { dogReference: updatedDogReference },
+      { new: true }
+      );
+      return res.json(updatedUser);
+  } catch (err) {
+    return next(err);
+  }
+});
 
 app.delete(`/v1/api/animals`, async (req, res) => {
     try {
@@ -91,9 +117,9 @@ app.delete(`/v1/api/animals`, async (req, res) => {
         await Animal.deleteOne({ name: animalName });
         res.send(`Delete successful!`);
     } catch (err) {
-        res.status(500).send(`An error occured during deletion.`);
+        res.status(500).send(`An error occurred during deletion.`);
     }
-})
+});
 
 const generateCyberSecurity = async (element) => {
     const generatedSecurePassword = await bcrypt.hash(element, saltRounds);
@@ -102,9 +128,9 @@ const generateCyberSecurity = async (element) => {
 
 app.post(`/v1/api/userRegister`, async (req, res) => {
     try {
-        const { name, date_of_birth, gender, country, city, street, user_name, password, e_mail_address, tel_number, credit_card, cvc, expiration_date, created_at } = req.body;
+        const { name, date_of_birth, gender, country, city, street, user_name, password, e_mail_address, tel_number, credit_card, expiration_date, created_at } = req.body;
         const hashedPassword = await generateCyberSecurity(password);
-        const hashedCreditCard = await generateCyberSecurity(credit_card);
+        // const hashedCreditCard = await generateCyberSecurity(credit_card);
         const newUser = new RegUser({
         name: name,
         date_of_birth: date_of_birth,
@@ -116,8 +142,7 @@ app.post(`/v1/api/userRegister`, async (req, res) => {
         password: hashedPassword,
         e_mail_address: e_mail_address,
         tel_number: tel_number,
-        credit_card: hashedCreditCard,
-        cvc: cvc,
+        credit_card: credit_card,
         expiration_date: expiration_date,
         created_at: created_at
         });
@@ -161,7 +186,7 @@ app.get('/v1/api/login', async (req, res) => {
         const query = JSON.parse(req.query.query);
         const registeredUser = await RegUser.findByName(query.user_name);
         const success = await comparePasswords(query.password, registeredUser.password) && (query.userName === registeredUser.user_name);
-        res.json({ success, user_name: registeredUser.user_name });
+        res.json({ success, user_name: registeredUser.user_name, _id: registeredUser._id });
     } catch (err) {
         res.status(500).send('An error occurred during login.');
     }

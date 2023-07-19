@@ -24,7 +24,7 @@ export default function RegistrationForm() {
     e_mail_address: '',
     tel_number: '',
     credit_card: '',
-    cvc: '',
+    // cvc: '',
     expiration_date: '',
     created_at: date
   });
@@ -105,10 +105,10 @@ export default function RegistrationForm() {
       return;
     }
   
-    if (reg.cvc.length !== 3 || !/^\d+$/.test(reg.cvc)) {
-      setError("CVC has improper type or length.");
-      return;
-    }
+    // if (reg.cvc.length !== 3 || !/^\d+$/.test(reg.cvc)) {
+    //   setError("CVC has improper type or length.");
+    //   return;
+    // }
   
     if (reg.expiration_date.length !== 5 || !/^\d{2}-\d{2}$/.test(reg.expiration_date)) {
       setError("Expiration date has improper type or length");
@@ -200,7 +200,7 @@ const formatPhoneNumber = (phoneNumber) => {
                     E-mail: <input type="email" onChange={(event) => handleChange("e_mail_address", event)} placeholder='username@provider.co'/> <br/>
                     Tel: <input name="tel_number" value={reg.tel_number} onChange={(event) => handleChange("tel_number", event)} placeholder='+00-(00)-000-0000'/> <br/>
                     Credit card number: <input value={reg.credit_card} onChange={(event) => handleChange("credit_card", event)} placeholder='0000-0000-0000-0000'/> <br/>
-                    Cvc: <input type="password" onChange={(event) => handleChange("cvc", event)} placeholder='000'/> <br/>
+                    {/* Cvc: <input type="password" onChange={(event) => handleChange("cvc", event)} placeholder='000'/> <br/> */}
                     Expiration date: <input name="expiration_date" value={reg.expiration_date} onChange={(event) => handleChange("expiration_date", event)} placeholder="01-26"/> <br/>
                     <button type="Submit" onClick = { handleSubmitButton }>Submit</button>
                   </form>

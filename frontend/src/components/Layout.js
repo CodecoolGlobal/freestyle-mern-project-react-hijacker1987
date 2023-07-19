@@ -3,7 +3,7 @@ import { Outlet, Link } from 'react-router-dom';
 
 import './design/Layout.css';
 
-export default function Layout({ loggedIn }) {
+export default function Layout({ loggedIn, id }) {
 
   const [loggedInToMyAccount, setLoggedInToMyAccount] = useState(``);
 
@@ -14,7 +14,11 @@ export default function Layout({ loggedIn }) {
   return (
     <div className="layout-container">
       <div className='navbar'>
-        <Link to='/main'><button>Main page</button></Link>
+        {!loggedIn? (
+          <Link to='/main'><button>Main page</button></Link>
+        ) : (
+          <Link to={`/main/${id}`}><button>Main page</button></Link>
+        )}
         <Link to='/account'><button>{ loggedInToMyAccount }</button></Link>
       </div>
       <Outlet />

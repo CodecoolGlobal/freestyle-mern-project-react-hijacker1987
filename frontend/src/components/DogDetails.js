@@ -2,15 +2,16 @@ import { React, useState } from 'react';
 
 import './design/DogDetails.css';
 
-export default function DogDetails({ pickedDog, loggedIn }) {
+export default function DogDetails({ pickedDog, loggedIn, id }) {
     const [ switchMeasure, setSwitchMeasure ] = useState(true);
     const [ weightMeasure, setWeightMeasure ] = useState(1);
     const [ heightMeasure, setHeightMeasure ] = useState(1);
     const [ weightString, setWeightString ] = useState("pounds");
     const [ heightString, setHeightString ] = useState("inches");
     const [ selectedFav, setSelectedFav ] = useState(false);
+    const [animalData, setAnimalData] = useState([]);
 
-    const [ favAnimal, setFavAnimal] = useState({
+    const [ favAnimal, _setFavAnimal] = useState({
         name: pickedDog.name,
         image: pickedDog.image_link,
         energy: pickedDog.energy,
@@ -46,20 +47,23 @@ export default function DogDetails({ pickedDog, loggedIn }) {
         }
     };
 
-    const addToFavourites = async () => {
+    const addToFavourites = async (dogID) => {
         setSelectedFav(true);
         try {
-            await fetch('http://127.0.0.1:3000/v1/api/animals', {
+          await fetch('http://127.0.0.1:3000/v1/api/animals', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+              'Content-Type': 'application/json',
             },
             body: JSON.stringify(favAnimal),
-            });
+          });
+    
+          // Call getData to add dogReference to users
+          await getData(dogID.name);
         } catch (err) {
-            console.log(err);
+          console.log(err);
         }
-    }
+      };
 
     const removeFromFavourites = async () => {
         try {
@@ -76,11 +80,68 @@ export default function DogDetails({ pickedDog, loggedIn }) {
         }
     }
 
+    const getAnimals = async () => {
+        try {
+          const response = await fetch("http://127.0.0.1:3000/v1/api/animals");
+      
+          if (!response.ok) {
+            throw new Error('Request failed with status ' + response.status);
+          }
+      
+          const data = await response.json();
+          setAnimalData(data);
+        } catch (error) {
+          console.log('Error fetching animal data:', error);
+        }
+      };
+
+    const addFavAnimalsToUser = async (user) => {
+        try {
+            await fetch(`http://127.0.0.1:3000/v1/api/user/${user}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(favAnimal),
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const handleUpdateUser = async (user) => {
+        const dogID = user.dogReference;
+        const updatedUser = {...user, dogReference: dogID};
+        addFavAnimalsToUser(updatedUser)
+    }
+
+    const getData = async (name) => {
+        const updatedAnimalData = await getAnimals();
+        if (updatedAnimalData && updatedAnimalData.length > 0) {
+          const newID = updatedAnimalData.find((dog) => dog.name === name);
+          if (newID) {
+            const usersToUpdate = animalData.map((user) => ({
+              ...user,
+              dogReference: newID._id,
+            }));
+            for (const user of usersToUpdate) {
+              await handleUpdateUser(user);
+            }
+          }
+        }
+      };
+
   return (
     <div className="dog-details">
         {loggedIn ? (
         <div>
-            {!selectedFav ? (<button type="Submit" onClick = { addToFavourites } className="toggle-favorites-button" >Add to favourites</button>
+            {!selectedFav ? (<button
+                                type="submit"
+                                onClick={() => addToFavourites(animalData, id)}
+                                className="toggle-favorites-button"
+                                >
+                                Add to favourites
+                            </button>
                         ) : (<button type="Submit" onClick = { removeFromFavourites } className="toggle-favorites-button" >Remove from favourites</button>)}            
             <div><span className="detail-label">Energy level:</span><span className="detail-value">{pickedDog.energy} / 5</span></div>
             <div><span className="detail-label">Barking level:</span><span className="detail-value">{pickedDog.barking} / 5</span></div>

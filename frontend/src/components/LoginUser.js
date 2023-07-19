@@ -1,7 +1,7 @@
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function LoginUser({ loggedIn, setLoggedIn, user, setUser }) {
+export default function LoginUser({ loggedIn, setLoggedIn, setUser, setId }) {
 
     const [loginUser, setLoginUser] = useState({ userName: ``, password: ``});
     const [logIn, setLogIn] = useState(``);
@@ -22,6 +22,7 @@ export default function LoginUser({ loggedIn, setLoggedIn, user, setUser }) {
           
           if (loginSuccess) {
                 setLoggedIn(true);
+                setId(data._id);
                 localStorage.setItem('isLoggedIn', true);
                 setLogIn(`Login success! Welcome back ${data.user_name}! :)`);
           } else if (!loginSuccess) {

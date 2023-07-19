@@ -15,7 +15,11 @@ const registerSchema = new Schema({
     credit_card: String,
     cvc: String,
     expiration_date: String,
-    created_at: Date
+    created_at: Date,
+    dogReference: [{
+        type: Schema.Types.ObjectId,
+        ref: `Animal`,
+      }],
 })
 
 const RegUser = model(`User`, registerSchema, "Registered Users");

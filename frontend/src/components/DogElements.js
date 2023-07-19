@@ -5,7 +5,7 @@ import FetchFavourites from './FetchFavourites';
 
 import './design/DogElements.css';
 
-export default function DogElements({ result, loggedIn }) {
+export default function DogElements({ result, loggedIn, id }) {
   const [ pickedDog, setPickedDog ] = useState(null);
   const [ detailButton, setDetailButton ] = useState("More About");
   const [ detailed, setDetailed ] = useState(false);
@@ -13,7 +13,7 @@ export default function DogElements({ result, loggedIn }) {
   const [ personalFavs, setPersonalFavs ] = useState(false);
 
   const handlePersonal = () => {
-    setPersonalFavs((prevState) => prevState === false ? true : false);
+    setPersonalFavs((prevState) => !prevState);
   }
 
   const detailHandler = (element) => {
@@ -56,6 +56,7 @@ export default function DogElements({ result, loggedIn }) {
                   pickedDog && <DogDetails
                   loggedIn = { loggedIn } 
                   pickedDog = { pickedDog } 
+                  id = { id }
                    />
               ) : (
                   void 0
