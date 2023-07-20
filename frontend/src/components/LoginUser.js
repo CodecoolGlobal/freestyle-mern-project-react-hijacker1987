@@ -1,5 +1,6 @@
 import { React, useState } from 'react';
 import { Link } from 'react-router-dom';
+import "./design/Login.css";
 
 export default function LoginUser({ loggedIn, setLoggedIn, setUser, setId, loginUser, setLoginUser }) {
 
@@ -39,7 +40,7 @@ export default function LoginUser({ loggedIn, setLoggedIn, setUser, setId, login
     }
 
     return (
-        <div>
+        <div className="login-container">
             <p>{ logIn }</p>
             {loggedIn ? (
                 <div>
@@ -47,14 +48,14 @@ export default function LoginUser({ loggedIn, setLoggedIn, setUser, setId, login
                     <button onClick = { handleLogOut }>Log out</button>
                 </div>
             ) : (
-                <div>
-                    <h4>Please type in Your</h4>
+                <div className="login-container">
+                    <h4 className="logintext">Please type in Your</h4>
                     <form>
-                        <input onChange={(event) => handleChange("userName", event)} placeholder='Username'></input> and <input onChange={(event) => handleChange("password", event)} placeholder='password' type="password"></input><h4>than press</h4>
+                        <input onChange={(event) => handleChange("userName", event)} placeholder='Username'></input><h4  className="logintext">and</h4><input onChange={(event) => handleChange("password", event)} placeholder='password' type="password"></input><h4 className="logintext">than press</h4>
                     </form>
                     <button onClick={handleSubmitButton}>Login</button><br/>
-                    <h4>if You don't have an account</h4>
-                    <h4>please advance to</h4>
+                    <h4 className="logintext">if You don't have an account</h4>
+                    <h4 className="logintext">please advance to</h4>
                     <Link to="/register"><button>Register</button></Link>
                 </div>
                 )}

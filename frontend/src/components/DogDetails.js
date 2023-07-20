@@ -10,6 +10,8 @@ export default function DogDetails({ pickedDog, loggedIn, id, loginUser }) {
     const [ heightString, setHeightString ] = useState("inches");
     const [ selectedFav, setSelectedFav ] = useState(false);
     const [ animalData, setAnimalData ] = useState([]);
+    const [ gender, setGender ] = useState(false);
+    const [ whichGender, setWhichGender ] = useState("Male");
 
     const [ favAnimal, _setFavAnimal] = useState({
         name: pickedDog.name,
@@ -131,6 +133,11 @@ export default function DogDetails({ pickedDog, loggedIn, id, loginUser }) {
         }
       };
 
+    const switchGender = () => {
+        setGender(!gender);
+        whichGender === "Male" ? setWhichGender("Female") : setWhichGender("Male");
+    }
+
   return (
     <div className="dog-details">
         {loggedIn ? (
@@ -150,7 +157,7 @@ export default function DogDetails({ pickedDog, loggedIn, id, loginUser }) {
             <div><span className="detail-label">Good with strangers:</span><span className="detail-value">{pickedDog.good_with_strangers} / 5</span></div>
             <div><span className="detail-label">Playfulness level:</span><span className="detail-value">{pickedDog.playfulness} / 5</span></div>
 
-            {pickedDog.min_weight_female !== pickedDog.max_weight_female
+            {pickedDog.min_weight_female !== pickedDog.max_weight_female && gender
                 ? (
                     <div>
                         <span className="detail-label">Female Weight: </span>
@@ -163,7 +170,7 @@ export default function DogDetails({ pickedDog, loggedIn, id, loginUser }) {
                     </div>
                     )}
 
-            {pickedDog.min_height_female !== pickedDog.max_height_female
+            {pickedDog.min_height_female !== pickedDog.max_height_female && gender
                 ? (
                     <div>
                         <span className="detail-label">and Height: </span>
@@ -176,7 +183,7 @@ export default function DogDetails({ pickedDog, loggedIn, id, loginUser }) {
                     </div>
                     )}
 
-            {pickedDog.min_weight_male !== pickedDog.max_weight_male
+            {pickedDog.min_weight_male !== pickedDog.max_weight_male && !gender
                 ? (
                     <div>
                         <span className="detail-label">Male Weight: </span>
@@ -189,7 +196,7 @@ export default function DogDetails({ pickedDog, loggedIn, id, loginUser }) {
                     </div>
                     )}
 
-            {pickedDog.min_height_male !== pickedDog.max_height_male
+            {pickedDog.min_height_male !== pickedDog.max_height_male && !gender
                 ? (
                     <div>
                         <span className="detail-label">and Height: </span>
@@ -204,6 +211,7 @@ export default function DogDetails({ pickedDog, loggedIn, id, loginUser }) {
                     
             <div><span className="detail-label">Expected life expectancy: </span><span>{pickedDog.min_life_expectancy} years</span></div>
             <button onClick={switchHandler}>Switch measure system</button>
+            <button onClick={switchGender}>{whichGender}</button>
         </div>
         ) : (
             <div className='detail-label'>Please register / login for further access.</div>

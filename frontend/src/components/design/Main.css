@@ -27,4 +27,9 @@
   .submit-button:hover {
     background-color: #45a049;
   }
+
+  .layout-container{
+    background-image: url("Dogpark.jpg");
+    background-size: cover;
+  }
   

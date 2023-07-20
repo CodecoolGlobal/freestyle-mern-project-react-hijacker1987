@@ -1,0 +1,11 @@
+.login-container {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 75%;
+  }
+  
+  .logintext {
+    color: rgb(0, 0, 0);
+    text-shadow: 4px 4px 8px rgb(83, 83, 83);
+  }
