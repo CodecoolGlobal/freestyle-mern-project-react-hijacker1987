@@ -77,8 +77,8 @@ export default function DogElements({ result, loggedIn, id, loginUser }) {
       {result ? (
         result.length > 0 ? (
           result.map((element) => (
-            <div key={element.name}>
-              <h2>{element.name}</h2>
+            <div className='dog-name-container' key={element.name}>
+              <h2 className='dog-name' >{element.name}</h2>
               <div className="dog-image-container">
                 <img src={element.image_link} alt="No img" className="dog-image" />
                 <button className="more-details-button" onClick={() => detailHandler(element)}>

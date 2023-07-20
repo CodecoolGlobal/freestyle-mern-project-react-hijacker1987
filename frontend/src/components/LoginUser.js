@@ -48,7 +48,7 @@ export default function LoginUser({ loggedIn, setLoggedIn, setUser, setId, login
                     <button onClick = { handleLogOut }>Log out</button>
                 </div>
             ) : (
-                <div className="login-container">
+                <div>
                     <h4 className="logintext">Please type in Your</h4>
                     <form>
                         <input onChange={(event) => handleChange("userName", event)} placeholder='Username'></input><h4  className="logintext">and</h4><input onChange={(event) => handleChange("password", event)} placeholder='password' type="password"></input><h4 className="logintext">than press</h4>

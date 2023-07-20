@@ -181,10 +181,10 @@ const formatPhoneNumber = (phoneNumber) => {
   }
 
   return (
-    <div>
+    <div className="login-container">
       {!submitted ? (
-                  <form className="login-container">
-                    <h5 classname="logintext">Please give your details below { error }<br/>
+                  <form>
+                    <h5 className="logintext">Please give your details below { error }<br/>
                     Name: <input onChange={(event) => handleChange("name", event)} placeholder="Your Name" /> <br/>
                     Date of birth: <input type="date" name="date_of_birth" value={reg.date_of_birth} onChange = { handleChangeDOB }/> <br/>
                     Gender:<select onChange={(event) => handleChange("gender", event)}>
