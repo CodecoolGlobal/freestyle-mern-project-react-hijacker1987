@@ -191,10 +191,14 @@ RegUser.findByName = async function (userName) {
     return await this.findOne({ userName });
 };
 
+RegUser.findAgain = async function (user) {
+  return await this.findOne({ user_name: user.userName });
+};
+
 app.get('/v1/api/login', async (req, res) => {
   try {
         const query = JSON.parse(req.query.query);
-        const registeredUser = await RegUser.findByName(query.user_name);
+        const registeredUser = await RegUser.findAgain(query);
         const success = await comparePasswords(query.password, registeredUser.password) && (query.userName === registeredUser.user_name);
         res.json({ success, user_name: registeredUser.user_name, _id: registeredUser._id, dogReference: registeredUser.dogReference });
     } catch (err) {
