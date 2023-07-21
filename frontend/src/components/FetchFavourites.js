@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function FetchFavourites({ favListId }) {
+export default function FetchFavourites({ favListId, personalFavs }) {
   const [isThereAnyData, setIsThereAnyData] = useState(false);
   const [fetchedData, setFetchedData] = useState([]);
 
@@ -10,20 +10,24 @@ export default function FetchFavourites({ favListId }) {
         const response = await fetch(`http://localhost:3000/v1/api/animals/${favs}`);
         const data = await response.json();
         // Handle the response data here
-        setFetchedData(data);
-        setIsThereAnyData(true);
+        if (data && data.length > 0) {
+          setFetchedData(data);
+          setIsThereAnyData(true);
+        }
       } catch (error) {
         // Handle any errors that occurred during the request
         console.error(error);
       }
     }
-
+  
     fetchData(favListId);
-  }, []); // Empty dependency array to run the effect only once
+  }, [favListId]);
+  
+  console.log(personalFavs)
 
   return (
     <div>
-      {isThereAnyData ? (
+      {personalFavs ? (
         <div>
           {fetchedData.map((element) => (
             <div key={element.name}>

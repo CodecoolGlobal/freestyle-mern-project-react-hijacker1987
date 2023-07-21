@@ -10,6 +10,7 @@ export default function DogElements({ result, loggedIn, id, loginUser }) {
   const [ detailed, setDetailed ] = useState(false);
   const [ personalFavs, setPersonalFavs ] = useState(false);
   const [ dogReference, setDogReference] = useState([]);
+  const [favListId, setFavListId] = useState('');
 
   const getLoggedInUser = async () => {
       try {
@@ -17,6 +18,7 @@ export default function DogElements({ result, loggedIn, id, loginUser }) {
           const response = await fetch(`http://127.0.0.1:3000/v1/api/login?query=${query}`);
           const data = await response.json();
           setDogReference(data.dogReference);
+          setFavListId(data.dogReference.join(','));
       } catch (error) {
         console.log('Error fetching user data:', error);
       }
@@ -64,7 +66,7 @@ export default function DogElements({ result, loggedIn, id, loginUser }) {
         {personalFavs ? (
           <div>
             <button onClick={handlePersonal}>Hide Personal Favorites</button>
-            <FetchFavourites />
+            <FetchFavourites favListId={favListId} personalFavs={personalFavs} />
           </div>
         ) : (
           <>
