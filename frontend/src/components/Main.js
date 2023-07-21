@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import DogElements from './DogElements';
 
 import './design/Main.css';
+import FetchFavourites from './FetchFavourites';
 
 export default function Main({ loggedIn, id, loginUser }) {
   const [inputChange, setInputChange] = useState('');
   const [result, setResult] = useState(null);
+  const [favListId, setFavListId] = useState([]);
 
   const handleSubmitButton = async (event) => {
     event.preventDefault();
@@ -31,7 +33,8 @@ export default function Main({ loggedIn, id, loginUser }) {
         </button>
       </form>
       <div>
-        <DogElements loggedIn = { loggedIn } result = { result } id = { id } loginUser = { loginUser }/>
+        <DogElements loggedIn={loggedIn} result={result} id={id} loginUser={loginUser} />
+        <FetchFavourites favListId={favListId} setFavListId={setFavListId} />
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-export default function FetchFavourites() {
+export default function FetchFavourites({ favListId }) {
   const [isThereAnyData, setIsThereAnyData] = useState(false);
   const [fetchedData, setFetchedData] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData(favs) {
       try {
-        const response = await fetch('http://localhost:3000/v1/api/animals');
+        const response = await fetch(`http://localhost:3000/v1/api/animals/${favs}`);
         const data = await response.json();
         // Handle the response data here
         setFetchedData(data);
@@ -18,7 +18,7 @@ export default function FetchFavourites() {
       }
     }
 
-    fetchData();
+    fetchData(favListId);
   }, []); // Empty dependency array to run the effect only once
 
   return (
